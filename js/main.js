@@ -1,4 +1,5 @@
 import {getPhotoDescriptions} from './data.js';
+import './photo-mini.js';
 
 
-console.log('Объявления: ', getPhotoDescriptions());
+//console.log('Описания фотографий: ', getPhotoDescriptions());

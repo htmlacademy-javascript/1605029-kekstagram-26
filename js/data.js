@@ -45,46 +45,40 @@ const NAMES = [
 ];
 
 
+const commentIdItems = getSequenceItems(COMMENT_ID_MIN, COMMENT_ID_MAX);
+const descriptionIdItems = getSequenceItems(DESCRIPTION_MIN_ID, DESCRIPTION_MAX_ID);
+const photoUrlIdItems = getSequenceItems(PHOTO_MIN_ID, PHOTO_MAX_ID);
+
+
 // Получение Url для фотографии
 const createUrl = (url, id) => {
   const dotIndex = url.indexOf('.');
   return [url.slice(0, dotIndex), id, url.slice(dotIndex)].join('');
-}
+};
 
 
 // Получение текста комментария
-const getCommentText = () => {
-  return COMMENTS[getRandomInteger(0, COMMENTS.length - 1)];
-}
+const getCommentText = () => COMMENTS[getRandomInteger(0, COMMENTS.length - 1)];
 
 
 // Получение имени автора комментария
-const getAuthorName = () => {
-  return NAMES[getRandomInteger(0, NAMES.length - 1)];
-}
+const getAuthorName = () => NAMES[getRandomInteger(0, NAMES.length - 1)];
 
 
 // Получение описания фотографии
-const getDescriptionText = () => {
-  return DESCRIPTIONS[getRandomInteger(0, DESCRIPTIONS.length - 1)];
-}
+const getDescriptionText = () => DESCRIPTIONS[getRandomInteger(0, DESCRIPTIONS.length - 1)];
 
 
 // Генерация объекта - комментария
-const createPhotoComment = () => {
-  return {
-    id: extractRandomItems(commentIdItems),
-    avatar: createUrl(AVATAR_URL, getRandomInteger(AVATAR_MIN_ID, AVATAR_MAX_ID)),
-    message: getCommentText(),
-    name: getAuthorName(),
-  };
-}
-
+const createPhotoComment = () => ({
+  id: extractRandomItems(commentIdItems),
+  avatar: createUrl(AVATAR_URL, getRandomInteger(AVATAR_MIN_ID, AVATAR_MAX_ID)),
+  message: getCommentText(),
+  name: getAuthorName(),
+});
 
 // Получение массива объектов комментариев
-const getCommentsItems = (count) => {
-  return Array.from({length: count}, createPhotoComment);
-}
+const getCommentsItems = (count) => Array.from({length: count}, createPhotoComment);
 
 
 // Генерация объекта - описания фотографии
@@ -98,18 +92,11 @@ const createPhotoDescription = () => {
     likes: getRandomInteger(LIKES_MIN, LIKES_MAX),
     comments: getCommentsItems(commentsCount)  //массив объектов — список комментариев, количество - на своё усмотрение.
   };
-}
+};
 
 
 // Генерация массива из объектов-объявлений
-const getPhotoDescriptions = () => {
-  return Array.from({length: DESCRIPTIONS_COUNT}, createPhotoDescription);
-}
-
-
-const commentIdItems = getSequenceItems(COMMENT_ID_MIN, COMMENT_ID_MAX);
-const descriptionIdItems = getSequenceItems(DESCRIPTION_MIN_ID, DESCRIPTION_MAX_ID);
-const photoUrlIdItems = getSequenceItems(PHOTO_MIN_ID, PHOTO_MAX_ID);
+const getPhotoDescriptions = () => Array.from({length: DESCRIPTIONS_COUNT}, createPhotoDescription);
 
 
 export {getPhotoDescriptions};

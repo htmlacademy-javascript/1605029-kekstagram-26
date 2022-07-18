@@ -11,13 +11,11 @@ const getRandomInteger = (start, end) => {
   max = max < 0 ? 0 : Math.floor(max);
 
   return min === max ? min : Math.floor(Math.random() * (max - min + 1) + min);
-}
+};
 
 
 // Проверка максимальной длины строки
-const checkMaxStringLength = (string, maxLength) => {
-  return string.length <= maxLength;
-}
+const checkMaxStringLength = (string, maxLength) => string.length <= maxLength;
 
 
 // Получение возрастающей последовательности из заданного количества чисел
@@ -28,7 +26,7 @@ const getSequenceItems = (min, max) => {
   }
 
   return items;
-}
+};
 
 
 // Извлечение из массива элементов в случайном порядке
@@ -40,11 +38,12 @@ const extractRandomItems = (items) => {
   }
 
   return items.splice(id, 1)[0];
-}
+};
 
 
 export {
   getRandomInteger,
   extractRandomItems,
-  getSequenceItems
-}
+  getSequenceItems,
+  checkMaxStringLength
+};
