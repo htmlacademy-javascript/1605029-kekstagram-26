@@ -19,3 +19,5 @@ picturesItems.forEach((picture) => {
 });
 
 picturesListElement.appendChild(picturesListFragment);
+
+export {picturesItems};

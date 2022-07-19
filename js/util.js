@@ -41,9 +41,14 @@ const extractRandomItems = (items) => {
 };
 
 
+// Проверка на нажатие клавиши Esc
+const isEscapeKey = (evt) => evt.key === 'Escape';
+
+
 export {
   getRandomInteger,
   extractRandomItems,
   getSequenceItems,
-  checkMaxStringLength
+  checkMaxStringLength,
+  isEscapeKey
 };
