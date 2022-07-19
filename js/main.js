@@ -1,3 +1,2 @@
-import {getPhotoDescriptions} from './data.js';
 import './gallery.js';
-
+import {getPhotoDescriptions} from './data.js';

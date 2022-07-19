@@ -1,22 +1,38 @@
 import {picturesItems} from './picture-mini.js';
 import {isEscapeKey} from './util.js';
 
+const PICTURE_WIDTH = 600;
+const PICTURE_HEIGHT = 600;
 
 const pictureItem = picturesItems[1];
 
-const bigPictureElement = document.querySelector('.big-picture');
-const commentsListElement = bigPictureElement.querySelector('.social__comments');
+const pictureModalElement = document.querySelector('.big-picture');
+const commentsListElement = pictureModalElement.querySelector('.social__comments');
 const commentsItemsElements = commentsListElement.querySelectorAll('.social__comment');
-const closeButtonElement = bigPictureElement.querySelector('#picture-cancel');
+const closeButtonElement = pictureModalElement.querySelector('#picture-cancel');
 
 
-const openPicture = () => {
-  bigPictureElement.querySelector('.big-picture__img img').src = pictureItem.url;
-  bigPictureElement.querySelector('.big-picture__img img').alt = pictureItem.description;
-  bigPictureElement.querySelector('.likes-count').textContent = pictureItem.likes;
-  bigPictureElement.querySelector('.comments-count').textContent = pictureItem.comments.length;
-  bigPictureElement.querySelector('.social__caption').textContent = pictureItem.description;
+// Создание и добавление в документ элемента фотографии
+const createPicture = () => {
+  const pictureElement = document.createElement('img');
+  pictureElement.src = pictureItem.url;
+  pictureElement.alt = pictureItem.description;
+  pictureElement.width = PICTURE_WIDTH;
+  pictureElement.height = PICTURE_HEIGHT;
+  pictureModalElement.querySelector('.big-picture__img').appendChild(pictureElement);
+};
 
+
+// Заполнение полей модального окна
+const setModalFieldsContent = () => {
+  pictureModalElement.querySelector('.likes-count').textContent = pictureItem.likes;
+  pictureModalElement.querySelector('.comments-count').textContent = pictureItem.comments.length;
+  pictureModalElement.querySelector('.social__caption').textContent = pictureItem.description;
+};
+
+
+// Добавление комментариев в модальное окно
+const createCommentsList = () => {
   if (!pictureItem.comments || pictureItem.comments.length === 0) {
     commentsListElement.remove();
   } else {
@@ -34,20 +50,28 @@ const openPicture = () => {
     commentsListElement.innerHTML = '';
     commentsListElement.appendChild(commentsItemsFragment);
   }
+};
 
-  bigPictureElement.querySelector('.social__comment-count').classList.add('hidden');
-  bigPictureElement.querySelector('.comments-loader').classList.add('hidden');
 
-  bigPictureElement.classList.remove('hidden');
+// Открытие модального окна с фотографией
+const openPictureModal = () => {
+  createPicture();
+  setModalFieldsContent();
+  createCommentsList();
+
+  pictureModalElement.querySelector('.social__comment-count').classList.add('hidden');
+  pictureModalElement.querySelector('.comments-loader').classList.add('hidden');
+
+  pictureModalElement.classList.remove('hidden');
   document.body.classList.add('modal-open');
 };
 
 const closePicture = () => {
   document.body.classList.remove('modal-open');
-  bigPictureElement.classList.add('hidden');
+  pictureModalElement.classList.add('hidden');
 };
 
-openPicture();
+openPictureModal();
 
 closeButtonElement.addEventListener('click', closePicture);
 document.addEventListener('keydown', (evt) => {
