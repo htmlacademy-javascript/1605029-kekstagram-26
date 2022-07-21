@@ -1,2 +1,3 @@
 import './gallery.js';
-import {getPhotoDescriptions} from './data.js';
+import './form.js';
+import './form-validation.js';

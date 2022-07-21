@@ -1298,6 +1298,10 @@ main {
   opacity: 0.6;
 }
 
+.validation-error {
+  color: #ff5635;
+}
+
 
 /**
  * Экран загрузки изображения

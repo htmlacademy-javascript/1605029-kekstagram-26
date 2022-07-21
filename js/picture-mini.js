@@ -1,23 +1,33 @@
-import {getPhotoDescriptions} from './data.js';
-
-
-const picturesListElement = document.querySelector('.pictures');
 const pictureTemplate = document.querySelector('#picture')
   .content
   .querySelector('.picture');
 
-const picturesItems = getPhotoDescriptions();
 
-const picturesListFragment = document.createDocumentFragment();
+// Получение фрагмента с разметкой элементов мини-фотографий
+const getPicturesItems = (picturesItemsData) => {
+  const picturesItemsFragment = document.createDocumentFragment();
 
-picturesItems.forEach((picture) => {
-  const pictureElement = pictureTemplate.cloneNode(true);
-  pictureElement.querySelector('.picture__img').src = picture.url;
-  pictureElement.querySelector('.picture__comments').textContent = picture.comments.length;
-  pictureElement.querySelector('.picture__likes').textContent = picture.likes;
-  picturesListFragment.appendChild(pictureElement);
-});
+  picturesItemsData.forEach((picture) => {
+    const pictureElement = pictureTemplate.cloneNode(true);
+    pictureElement.querySelector('.picture__img').src = picture.url;
+    pictureElement.querySelector('.picture__img').alt = picture.description;
+    pictureElement.querySelector('.picture__comments').textContent = picture.comments.length;
+    pictureElement.querySelector('.picture__likes').textContent = picture.likes;
+    picturesItemsFragment.appendChild(pictureElement);
+  });
 
-picturesListElement.appendChild(picturesListFragment);
+  return picturesItemsFragment;
+};
 
-export {picturesItems};
+
+// Создание разметки со списком мини-фотографий
+const setPicturesListMarkup = (picturesItemsFragment) => {
+  const picturesListElement = document.querySelector('.pictures');
+  picturesListElement.appendChild(picturesItemsFragment);
+};
+
+
+export {
+  getPicturesItems,
+  setPicturesListMarkup
+};

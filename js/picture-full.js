@@ -1,10 +1,8 @@
-import {picturesItems} from './picture-mini.js';
 import {isEscapeKey} from './util.js';
+
 
 const PICTURE_WIDTH = 600;
 const PICTURE_HEIGHT = 600;
-
-const pictureItem = picturesItems[1];
 
 const pictureModalElement = document.querySelector('.big-picture');
 const commentsListElement = pictureModalElement.querySelector('.social__comments');
@@ -13,10 +11,10 @@ const closeButtonElement = pictureModalElement.querySelector('#picture-cancel');
 
 
 // Создание и добавление в документ элемента фотографии
-const createPicture = () => {
+const createPicture = (pictureItemData) => {
   const pictureElement = document.createElement('img');
-  pictureElement.src = pictureItem.url;
-  pictureElement.alt = pictureItem.description;
+  pictureElement.src = pictureItemData.url;
+  pictureElement.alt = pictureItemData.description;
   pictureElement.width = PICTURE_WIDTH;
   pictureElement.height = PICTURE_HEIGHT;
   pictureModalElement.querySelector('.big-picture__img').appendChild(pictureElement);
@@ -24,21 +22,21 @@ const createPicture = () => {
 
 
 // Заполнение полей модального окна
-const setModalFieldsContent = () => {
-  pictureModalElement.querySelector('.likes-count').textContent = pictureItem.likes;
-  pictureModalElement.querySelector('.comments-count').textContent = pictureItem.comments.length;
-  pictureModalElement.querySelector('.social__caption').textContent = pictureItem.description;
+const setFieldsContent = (pictureItemData) => {
+  pictureModalElement.querySelector('.likes-count').textContent = pictureItemData.likes;
+  pictureModalElement.querySelector('.comments-count').textContent = pictureItemData.comments.length;
+  pictureModalElement.querySelector('.social__caption').textContent = pictureItemData.description;
 };
 
 
 // Добавление комментариев в модальное окно
-const createCommentsList = () => {
-  if (!pictureItem.comments || pictureItem.comments.length === 0) {
+const createCommentsList = (pictureItemData) => {
+  if (!pictureItemData.comments || pictureItemData.comments.length === 0) {
     commentsListElement.remove();
   } else {
     const commentsItemsFragment = document.createDocumentFragment();
 
-    pictureItem.comments.forEach((comment) => {
+    pictureItemData.comments.forEach((comment) => {
       const commentItemElement = commentsItemsElements[0].cloneNode(true);
       commentItemElement.querySelector('.social__picture').src = comment.avatar;
       commentItemElement.querySelector('.social__picture').alt = comment.name;
@@ -53,31 +51,43 @@ const createCommentsList = () => {
 };
 
 
+// Функция события - нажатия клавиши Esc
+const onPictureModalEscDown = (evt) => {
+  if (isEscapeKey(evt)) {
+    evt.preventDefault();
+    closePictureModal();
+  }
+};
+
+
+//Закрытие модального окна
+function closePictureModal () {
+  document.body.classList.remove('modal-open');
+  pictureModalElement.classList.add('hidden');
+  const pictureElement = pictureModalElement.querySelector('.big-picture__img img');
+  pictureModalElement.querySelector('.big-picture__img').removeChild(pictureElement);
+
+  document.removeEventListener('keydown', onPictureModalEscDown);
+}
+
+
 // Открытие модального окна с фотографией
-const openPictureModal = () => {
-  createPicture();
-  setModalFieldsContent();
-  createCommentsList();
+function openPictureModal (pictureItemData) {
+  createPicture(pictureItemData);
+  setFieldsContent(pictureItemData);
+  createCommentsList(pictureItemData);
 
   pictureModalElement.querySelector('.social__comment-count').classList.add('hidden');
   pictureModalElement.querySelector('.comments-loader').classList.add('hidden');
 
   pictureModalElement.classList.remove('hidden');
   document.body.classList.add('modal-open');
-};
 
-const closePicture = () => {
-  document.body.classList.remove('modal-open');
-  pictureModalElement.classList.add('hidden');
-};
+  document.addEventListener('keydown', onPictureModalEscDown);
+}
 
-openPictureModal();
 
-closeButtonElement.addEventListener('click', closePicture);
-document.addEventListener('keydown', (evt) => {
-  if (isEscapeKey(evt)) {
-    evt.preventDefault();
-    closePicture();
-  }
-});
+closeButtonElement.addEventListener('click', closePictureModal);
 
+
+export {openPictureModal};
