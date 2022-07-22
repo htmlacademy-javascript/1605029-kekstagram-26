@@ -21,7 +21,7 @@ const LIKES_MIN = 15;
 const LIKES_MAX = 200;
 
 const COMMENT_ID_MIN = 1;
-const COMMENT_ID_MAX = 200;
+const COMMENT_ID_MAX = 375;
 const COMMENTS = [
   'Всё отлично!',
   'В целом всё неплохо. Но не всё.',
@@ -30,8 +30,8 @@ const COMMENTS = [
   'Я поскользнулся на банановой кожуре и уронил фотоаппарат на кота и у меня получилась фотография лучше.',
   'Лица у людей на фотке перекошены, как будто их избивают. Как можно было поймать такой неудачный момент?!'
 ];
-const COMMENTS_COUNT_MIN = 1;
-const COMMENTS_COUNT_MAX = 5;
+const COMMENTS_COUNT_MIN = 0;
+const COMMENTS_COUNT_MAX = 15;
 const AVATAR_MIN_ID = 1;
 const AVATAR_MAX_ID = 6;
 const AVATAR_URL = 'img/avatar-.svg';
