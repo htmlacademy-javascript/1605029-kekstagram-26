@@ -59,9 +59,11 @@ const filters = {
   }
 };
 
+const formElement = document.querySelector('.img-upload__form');
 const uploadFileElement = document.querySelector('#upload-file');
 const formModalElement = document.querySelector('.img-upload__overlay');
 const closeButtonElement = formModalElement.querySelector('#upload-cancel');
+const submitButtonElement = formModalElement.querySelector('#upload-submit');
 const scaleValueElement = formModalElement.querySelector('.scale__control--value');
 const scaleIncreaseButton = formModalElement.querySelector('.scale__control--bigger');
 const scaleDecreaseButton = formModalElement.querySelector('.scale__control--smaller');
@@ -184,16 +186,35 @@ const onFormModalEscDown = (evt) => {
 
 // Закрытие модального окна формы
 function closeFormModal () {
-  document.body.classList.remove('modal-open');
-  formModalElement.classList.add('hidden');
+  const errorModalElement = document.querySelector('.error');
 
-  uploadFileElement.value = '';
-  setScaleValue(SCALE_DEFAULT);
-  setPictureScale(SCALE_DEFAULT);
-  resetFilters();
+  if (!errorModalElement) {
+    document.body.classList.remove('modal-open');
+    formModalElement.classList.add('hidden');
 
-  document.removeEventListener('keydown', onFormModalEscDown);
+    formElement.reset();
+    uploadFileElement.value = '';
+    setScaleValue(SCALE_DEFAULT);
+    setPictureScale(SCALE_DEFAULT);
+    resetFilters();
+
+    document.removeEventListener('keydown', onFormModalEscDown);
+  }
 }
+
+
+// Блокирование кнопки "Опубликовать"
+const blockSubmitButton = () => {
+  submitButtonElement.disabled = true;
+  submitButtonElement.textContent = 'Публикую...';
+};
+
+
+// Разблокирование кнопки "Опубликовать"
+const unblockSubmitButton = () => {
+  submitButtonElement.disabled = false;
+  submitButtonElement.textContent = 'Опубликовать';
+};
 
 
 // Открытие модального окна формы
@@ -205,10 +226,20 @@ function openFormModal () {
 }
 
 
-hideSlider();
-uploadFileElement.addEventListener('change', openFormModal);
-closeButtonElement.addEventListener('click', closeFormModal);
-scaleIncreaseButton.addEventListener('click', onIncreaseScaleButtonClick);
-scaleDecreaseButton.addEventListener('click', onDecreaseScaleButtonClick);
-effectsButtonsElements.addEventListener('change', onEffectsButtonClick);
-onSliderChange(changeEffectLevel);
+const setForm = () => {
+  hideSlider();
+  uploadFileElement.addEventListener('change', openFormModal);
+  closeButtonElement.addEventListener('click', closeFormModal);
+  scaleIncreaseButton.addEventListener('click', onIncreaseScaleButtonClick);
+  scaleDecreaseButton.addEventListener('click', onDecreaseScaleButtonClick);
+  effectsButtonsElements.addEventListener('change', onEffectsButtonClick);
+  onSliderChange(changeEffectLevel);
+};
+
+
+export {
+  setForm,
+  closeFormModal,
+  blockSubmitButton,
+  unblockSubmitButton
+};

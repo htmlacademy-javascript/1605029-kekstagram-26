@@ -1,3 +1,6 @@
+const ALERT_SHOW_TIME = 7000;
+
+
 // Получить случайное целое число из диапазона включительно.
 const getRandomInteger = (start, end) => {
   let min = Math.min(start, end);
@@ -45,10 +48,40 @@ const extractRandomItems = (items) => {
 const isEscapeKey = (evt) => evt.key === 'Escape';
 
 
+// Вывод сообщения о проблеме
+function showAlert (message) {
+  const alertContainer = document.createElement('div');
+  alertContainer.style.zIndex = '1100';
+  alertContainer.style.position = 'absolute';
+  alertContainer.style.left = '0';
+  alertContainer.style.top = '200px';
+  alertContainer.style.right = '0';
+  alertContainer.style.width = '500px';
+  alertContainer.style.margin = '0 auto';
+  alertContainer.style.padding = '40px';
+  alertContainer.style.fontSize = '30px';
+  alertContainer.style.lineHeight = '1.6';
+  alertContainer.style.textAlign = 'center';
+  alertContainer.style.color = '#000000';
+  alertContainer.style.fontWeight = '700';
+  alertContainer.style.backgroundColor = 'tomato';
+  alertContainer.style.border = '4px solid #771717';
+
+  alertContainer.textContent = message;
+
+  document.body.append(alertContainer);
+
+  setTimeout(() => {
+    alertContainer.remove();
+  }, ALERT_SHOW_TIME);
+}
+
+
 export {
   getRandomInteger,
   extractRandomItems,
   getSequenceItems,
   checkMaxStringLength,
-  isEscapeKey
+  isEscapeKey,
+  showAlert
 };

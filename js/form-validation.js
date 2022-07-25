@@ -1,3 +1,7 @@
+import {blockSubmitButton, unblockSubmitButton} from './form.js';
+import {sendData} from './api.js';
+
+
 const formElement = document.querySelector('.img-upload__form');
 
 const pristine = new Pristine(formElement, {
@@ -54,13 +58,27 @@ pristine.addValidator(
 );
 
 
-formElement.addEventListener('submit', (evt) => {
-  evt.preventDefault();
+const setFormSubmit = (onSuccess, onFail) => {
+  formElement.addEventListener('submit', (evt) => {
+    evt.preventDefault();
 
-  const isValid = pristine.validate();
-  if (isValid) {
-    console.log('Можно отправлять.');
-  } else {
-    console.log('Нельзя отправлять.');
-  }
-});
+    const isValid = pristine.validate();
+    if (isValid) {
+      blockSubmitButton();
+      sendData(
+        () => {
+          unblockSubmitButton();
+          onSuccess();
+        },
+        () => {
+          unblockSubmitButton();
+          onFail();
+        },
+        new FormData(evt.target)
+      );
+    }
+  });
+};
+
+
+export {setFormSubmit};

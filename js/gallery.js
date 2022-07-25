@@ -1,4 +1,3 @@
-import {getPhotoDescriptions} from './data.js';
 import {
   getPicturesItems,
   setPicturesListMarkup
@@ -6,15 +5,19 @@ import {
 import {openPictureModal} from './picture-full.js';
 
 
-const picturesData = getPhotoDescriptions();
-const picturesItemsFragment = getPicturesItems(picturesData);
-setPicturesListMarkup(picturesItemsFragment);
+const setGallery = (picturesData) => {
+  const picturesItemsFragment = getPicturesItems(picturesData);
+  setPicturesListMarkup(picturesItemsFragment);
 
-const picturesListElement = document.querySelector('.pictures');
+  const picturesListElement = document.querySelector('.pictures');
 
-picturesListElement.addEventListener('click', (evt) => {
-  if ([...evt.target.classList].includes('picture__img')) {
-    const itemIndex = [...picturesListElement.querySelectorAll('.picture__img')].indexOf(evt.target);
-    openPictureModal(picturesData[itemIndex]);
-  }
-});
+  picturesListElement.addEventListener('click', (evt) => {
+    if ([...evt.target.classList].includes('picture__img')) {
+      const itemIndex = [...picturesListElement.querySelectorAll('.picture__img')].indexOf(evt.target);
+      openPictureModal(picturesData[itemIndex]);
+    }
+  });
+};
+
+
+export {setGallery};
