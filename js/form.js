@@ -1,4 +1,6 @@
 import './slider.js';
+import './picture-upload.js';
+import {resetPreview} from './picture-upload.js';
 import {
   updateSlider,
   resetSlider,
@@ -197,6 +199,7 @@ function closeFormModal () {
     setScaleValue(SCALE_DEFAULT);
     setPictureScale(SCALE_DEFAULT);
     resetFilters();
+    resetPreview();
 
     document.removeEventListener('keydown', onFormModalEscDown);
   }

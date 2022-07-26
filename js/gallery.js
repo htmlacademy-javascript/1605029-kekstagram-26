@@ -1,13 +1,10 @@
-import {
-  getPicturesItems,
-  setPicturesListMarkup
-} from './picture-mini.js';
+import {setPicturesListMarkup} from './picture-mini.js';
 import {openPictureModal} from './picture-full.js';
+import {filterPictures} from './filters.js';
 
 
 const setGallery = (picturesData) => {
-  const picturesItemsFragment = getPicturesItems(picturesData);
-  setPicturesListMarkup(picturesItemsFragment);
+  setPicturesListMarkup(filterPictures(picturesData));
 
   const picturesListElement = document.querySelector('.pictures');
 

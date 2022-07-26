@@ -21,9 +21,16 @@ const getPicturesItems = (picturesItemsData) => {
 
 
 // Создание разметки со списком мини-фотографий
-const setPicturesListMarkup = (picturesItemsFragment) => {
-  const picturesListElement = document.querySelector('.pictures');
-  picturesListElement.appendChild(picturesItemsFragment);
+const setPicturesListMarkup = (picturesData) => {
+  const picturesContainerElement = document.querySelector('.pictures');
+  const picturesItems = picturesContainerElement.querySelectorAll('.picture');
+
+  if (picturesItems.length > 0) {
+    picturesItems.forEach((item) => item.remove());
+  }
+
+  const picturesItemsFragment = getPicturesItems(picturesData);
+  picturesContainerElement.appendChild(picturesItemsFragment);
 };
 
 

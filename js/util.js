@@ -17,6 +17,26 @@ const getRandomInteger = (start, end) => {
 };
 
 
+// Получить перемешанный массив заданной длины
+// из уникальных элементов заданного массива
+function getShuffledUniqueElements (elements, elementsCount) {
+  const shuffledElements = [];
+
+  if (elements.length < elementsCount) {
+    elementsCount = elements.length;
+  }
+
+  while (shuffledElements.length < elementsCount) {
+    const randomIndex = getRandomInteger(0, elementsCount - 1);
+    if (!shuffledElements.includes(elements[randomIndex])) {
+      shuffledElements.push(elements[randomIndex]);
+    }
+  }
+
+  return shuffledElements;
+}
+
+
 // Проверка максимальной длины строки
 const checkMaxStringLength = (string, maxLength) => string.length <= maxLength;
 
@@ -49,7 +69,7 @@ const isEscapeKey = (evt) => evt.key === 'Escape';
 
 
 // Вывод сообщения о проблеме
-function showAlert (message) {
+const showAlert = (message) => {
   const alertContainer = document.createElement('div');
   alertContainer.style.zIndex = '1100';
   alertContainer.style.position = 'absolute';
@@ -74,7 +94,16 @@ function showAlert (message) {
   setTimeout(() => {
     alertContainer.remove();
   }, ALERT_SHOW_TIME);
-}
+};
+
+
+const debounce = (callback, timeoutDelay) => {
+  let timeoutId;
+  return (...rest) => {
+    clearTimeout(timeoutId);
+    timeoutId = setTimeout(() => callback.apply(this, rest), timeoutDelay);
+  };
+};
 
 
 export {
@@ -83,5 +112,7 @@ export {
   getSequenceItems,
   checkMaxStringLength,
   isEscapeKey,
-  showAlert
+  showAlert,
+  getShuffledUniqueElements,
+  debounce
 };
