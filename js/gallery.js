@@ -4,14 +4,15 @@ import {filterPictures} from './filters.js';
 
 
 const setGallery = (picturesData) => {
-  setPicturesListMarkup(filterPictures(picturesData));
+  const filteredPicturesData = filterPictures(picturesData);
+  setPicturesListMarkup(filteredPicturesData);
 
   const picturesListElement = document.querySelector('.pictures');
 
   picturesListElement.addEventListener('click', (evt) => {
     if ([...evt.target.classList].includes('picture__img')) {
       const itemIndex = [...picturesListElement.querySelectorAll('.picture__img')].indexOf(evt.target);
-      openPictureModal(picturesData[itemIndex]);
+      openPictureModal(filteredPicturesData[itemIndex]);
     }
   });
 };

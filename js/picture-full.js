@@ -18,12 +18,14 @@ let commentsDisplayed = 0;
 
 // Создание и добавление в документ элемента фотографии
 const createPicture = (pictureItemData) => {
+  const pictureContainerElement = pictureModalElement.querySelector('.big-picture__img');
   const pictureElement = document.createElement('img');
   pictureElement.src = pictureItemData.url;
   pictureElement.alt = pictureItemData.description;
   pictureElement.width = PICTURE_WIDTH;
   pictureElement.height = PICTURE_HEIGHT;
-  pictureModalElement.querySelector('.big-picture__img').appendChild(pictureElement);
+  pictureContainerElement.innerHTML = '';
+  pictureContainerElement.appendChild(pictureElement);
 };
 
 

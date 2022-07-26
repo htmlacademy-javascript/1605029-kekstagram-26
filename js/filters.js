@@ -3,7 +3,6 @@ import {getShuffledUniqueElements} from './util.js';
 
 const BUTTON_ACTIVE_CLASS = 'img-filters__button--active';
 const RANDOM_PICTURES_COUNT = 10;
-
 const FILTER_RANDOM_ID = 'filter-random';
 const FILTER_DISCUSSED_ID = 'filter-discussed';
 
