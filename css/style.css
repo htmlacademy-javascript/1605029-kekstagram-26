@@ -1213,6 +1213,10 @@ main {
   background-color: rgba(0, 0, 0, 0.8);
 }
 
+.error {
+  z-index: 1000;
+}
+
 .error__inner,
 .success__inner {
   position: relative;
@@ -1296,6 +1300,10 @@ main {
 .error__button:active,
 .success__button:active {
   opacity: 0.6;
+}
+
+.validation-error {
+  color: #ff5635;
 }
 
 
